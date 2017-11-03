@@ -13,14 +13,14 @@ class InstaUser:
         else:
             self.username = username
             self.id = Tools.getId(self.username)
-            self.new_subscribers = self.getNewSubscribers()
+            self.new_subscribers = []
             self.count = len(self.new_subscribers)
             USERS[username] = self
 
     def copy(self):
         return copy.deepcopy(self)
 
-    def getNewSubscribers(self):
+    def getNewSubscribers(self, adv_list):
         last = DB.getLastSubscribers(self.username)
         first = False
         # if len(last) == 0:
@@ -57,7 +57,8 @@ class InstaUser:
             subscribers.extend(new_subs)
             time.sleep(0.5)
         DB.setLastSubscribers(self.username, subscribers)
-        return [Subscriber(s) for s in subscribers]
+        self.new_subscribers = [Subscriber(s, adv_list) for s in subscribers]
+        self.count = len(self.new_subscribers)
 
     def __repr__(self):
         items = ("%s = %r" % (k, v) for k, v in self.__dict__.items())

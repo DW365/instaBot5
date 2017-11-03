@@ -5,13 +5,13 @@ from tools import Tools
 
 
 class Subscriber:
-    def __init__(self, username):
+    def __init__(self, username, adv_list):
         self.username = username
         data = Tools.getUser(username)
         self.id = data['id']
         self.subscriptions_count = int(data['follows']['count'])
         self.posts = int(data['media']['count'])
-        self.advSubs = self.checkAdvSub(SETTINGS.adv_list)
+        self.advSubs = self.checkAdvSub(adv_list)
         time.sleep(1)
 
     def checkAdvSub(self, adv_list):

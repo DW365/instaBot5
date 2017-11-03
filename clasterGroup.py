@@ -7,6 +7,7 @@ class ClasterGroup:
         self.sum = 0
         self.average_subs = 0
         self.average_posts = 0
+        self.count = 0
 
     def parseString(self, groups, prices):
         clasters = []
@@ -40,6 +41,7 @@ class ClasterGroup:
         if count != 0:
             self.average_posts = posts / count
             self.average_subs = subs / count
+        self.count = count
 
     def __repr__(self):
         items = ("%s = %r" % (k, v) for k, v in self.__dict__.items())
