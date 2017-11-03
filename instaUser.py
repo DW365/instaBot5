@@ -14,12 +14,7 @@ class InstaUser:
             self.username = username
             self.id = Tools.getId(self.username)
             self.new_subscribers = self.getNewSubscribers()
-
             self.count = len(self.new_subscribers)
-            self.sum = 0
-            self.average_posts = 0
-            self.average_subs = 0
-            self.setAverage()
             USERS[username] = self
 
     def copy(self):
@@ -27,6 +22,9 @@ class InstaUser:
 
     def getNewSubscribers(self):
         last = DB.getLastSubscribers(self.username)
+        first = False
+        # if len(last) == 0:
+        #     first = True
         subscribers = []
 
         resp = SETTINGS.IAPI.getUserFollowers(self.id)
@@ -45,6 +43,10 @@ class InstaUser:
             return subscribers, needMore
 
         new_subs, needMore = parse_raw(subscribers_raw)
+        if first:
+            needMore = False
+            DB.setLastSubscribers(self.username, subscribers)
+            return []
         subscribers.extend(new_subs)
 
         while resp.getNextMaxId() is not None and needMore:
@@ -56,14 +58,6 @@ class InstaUser:
             time.sleep(0.5)
         DB.setLastSubscribers(self.username, subscribers)
         return [Subscriber(s) for s in subscribers]
-
-    def setAverage(self):
-        if len(self.new_subscribers) != 0:
-            for i in self.new_subscribers:
-                self.average_posts += i.posts
-                self.average_subs += i.advSubs
-            self.average_posts /= len(self.new_subscribers)
-            self.average_subs /= len(self.new_subscribers)
 
     def __repr__(self):
         items = ("%s = %r" % (k, v) for k, v in self.__dict__.items())
