@@ -2,4 +2,10 @@
 /data
 /db.db
 /test-92ef740f572c.json
-/.idea
+.idea/InstaBot5.iml
+.idea/dbnavigator.xml
+.idea/misc.xml
+.idea/modules.xml
+.idea/workspace.xml
+__pycache__/
+/.idea/
