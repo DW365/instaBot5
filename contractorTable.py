@@ -135,14 +135,14 @@ class ContractorTable:
         values.append(self.adw_account)
         values.append(clasterGroup.count)
         values.append(clasterGroup.sum)
-        values.append(clasterGroup.average_posts)
-        values.append(clasterGroup.average_subs)
+        values.append(round(clasterGroup.average_posts))
+        values.append(round(clasterGroup.average_subs))
         for claster in clasterGroup.clasters:
             values.append(claster.count)
         for claster in clasterGroup.clasters:
             values.append(claster.price)
         for claster in clasterGroup.clasters:
-            values.append(claster.average_posts)
+            values.append(round(claster.average_posts))
         for claster in clasterGroup.clasters:
-            values.append(claster.average_subs)
+            values.append(round(claster.average_subs))
         self.worksheet.append_row(values)
