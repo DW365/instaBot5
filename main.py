@@ -46,6 +46,7 @@ def main():
     # a.getContractors()
     a = ContractorTable("1asfaa23", "456", "0-200;201-500;501-700;701-1000;1000+",
                         "1othHRfy6yuoDowRIqfEQpG9sDBWeCaD0sQ6ylUJa9u4")
+    a.addWorksheet()
     a.addLine(c)
     print(a.sid)
     # a.addWorksheet()
