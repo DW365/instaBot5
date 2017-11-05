@@ -1,0 +1,93 @@
+<html>
+    <head>
+    <!-- Latest compiled and minified CSS -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
+
+    <!-- Optional theme -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap-theme.min.css" integrity="sha384-rHyoN1iRsVXV4nD0JutlnGaslCJuC7uwjduW9SVrLvRYooPp2bWYgmgJQIXwl/Sp" crossorigin="anonymous">
+
+    <!-- Latest compiled and minified JavaScript -->
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+    </head>
+
+    <body>
+        <div class="container">
+            <div class="row">
+                <div class="col-sm-6">
+                    <h2>Настройки</h2>
+                    <form method="post" action="/parser5/save" novalidate="">
+                        <dl>
+                            <div class="row">
+                                <div class="col-xs-6"><dt>Логин Инстаграм:</dt>
+                                    <dd>
+                                        <div><input class="form-control" type="text" name="insta_login" value="{{insta_login}}"></div>
+                                    </dd>
+                                </div>
+                                <div class="col-xs-6"><dt>Пароль Инстаграм:</dt>
+                                    <dd>
+                                        <div><input class="form-control" type="password" name="insta_password" value="{{insta_password}}"></div>
+                                    </dd>
+                                </div>
+                            </div>
+                        </dl>
+
+                        <dl>
+                        <dt>Задержка между запросами:</dt>
+                        <dd>
+                        <div><input class="form-control" type="text" name="delay" value="{{delay}}"></div>
+                        </dd>
+                        </dl>
+
+                        <dl>
+                        <dt>Proxy (http://login:password@ip:port/):</dt>
+                        <dd>
+                        <div><input class="form-control" type="text" name="proxy" value="{{proxy}}"></div>
+                        </dd>
+                        </dl>
+
+                        <dl>
+                        <dt>Ключ таблицы. Необходимо разрешить доступ к таблице для scenic-bolt-150614@appspot.gserviceaccount.com::</dt>
+                        <dd>
+                        <div><input class="form-control" type="text" name="main_table" value="{{main_table}}"></div>
+                        </dd>
+                        </dl>
+
+                        <input type="submit" class = "btn" value="Применить настройки">
+                    </form>
+
+                    <form method="post" action="/parser5/new" novalidate="">
+
+                        <dl>
+                        <dt>Имя таблицы:</dt>
+                        <dd>
+                        <div><input class="form-control" type="text" name="name" value=""></div>
+                        </dd>
+                        </dl>
+                        <input type="submit" class = "btn" value="Создать таблицу подрядчика">
+                    </form>
+                </div>
+
+                
+                <div class="col-sm-6">
+                    <h2>Лог</h2>
+                    <dl>
+                        <dt>Последние события:</dt>
+                        <dd>
+                        <textarea id="log" class="form-control" rows = 22 wrap="soft">{{log}}</textarea>
+                        </dd>
+                        </dl>
+                    
+                    <form method="post" action="/parser3/clear" novalidate="">
+
+                        <input type="submit" class = "btn" value="Очистить">
+                    </form>
+                </div>
+            </div>
+            
+        </div>
+    </body>
+    <script type="text/javascript">
+                    var textarea = document.getElementById('log');
+                    textarea.scrollTop = textarea.scrollHeight;
+                </script>
+</html>

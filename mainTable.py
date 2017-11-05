@@ -20,32 +20,35 @@ class mainTable:
     def getContractors(self):
         c = self.worksheet.get_all_records()
         for i in range(0, len(c)):
-            accban = Tools.checkBan(Tools.getAccFromUrl(c[i]['Аккаунт']))
-            adwban = Tools.checkBan(Tools.getAccFromUrl(c[i]['Запаска']))
-            if accban or adwban:
-                closed = True
-            else:
-                closed = Tools.checkClosed(Tools.getAccFromUrl(c[i]['Аккаунт'])) or Tools.checkClosed(
-                    Tools.getAccFromUrl(c[i]['Запаска']))
+            if c[i]['Аккаунт'] != "" and \
+               c[i]['Распределение подписок'] != "" and \
+               c[i]['Запаска'] != "" and \
+               c[i]['Цены по распределению'] != "":
 
-            self.worksheet.update_cell(2 + i, 7, "Да" if accban else "Нет")
-            self.worksheet.update_cell(2 + i, 8, "Да" if adwban else "Нет")
-            self.worksheet.update_cell(2 + i, 9, "Да" if closed else "Нет")
-            if not closed:
-                if c[i]['Аккаунт'] != "" and \
-                   c[i]['Распределение подписок'] != "" and \
-                   c[i]['Запаска'] != "" and \
-                   c[i]['Цены по распределению'] != "":
+                accban = Tools.checkBan(Tools.getAccFromUrl(c[i]['Аккаунт']))
+                adwban = Tools.checkBan(Tools.getAccFromUrl(c[i]['Запаска']))
+                if accban or adwban:
+                    closed = True
+                else:
+                    closed = Tools.checkClosed(Tools.getAccFromUrl(c[i]['Аккаунт'])) or Tools.checkClosed(
+                        Tools.getAccFromUrl(c[i]['Запаска']))
+
+                self.worksheet.update_cell(2 + i, 7, "Да" if accban else "Нет")
+                self.worksheet.update_cell(2 + i, 8, "Да" if adwban else "Нет")
+                self.worksheet.update_cell(2 + i, 9, "Да" if closed else "Нет")
+                if not closed:
+                    needHeader = False
                     if not DB.checkAccount(c[i]['Аккаунт']):
                         DB.addAccount(Tools.getAccFromUrl(c[i]['Аккаунт']),
                                       Tools.getAccFromUrl(c[i]['Запаска']),
                                       c[i]['Распределение подписок'],
                                       c[i]['Цены по распределению'])
+                        needHeader = True
                     contractor = Contractor(ClasterGroup(c[i]['Распределение подписок'], c[i]['Цены по распределению']),
                                             ContractorTable(c[i]['Аккаунт'],
                                                             c[i]['Запаска'],
                                                             c[i]['Распределение подписок'],
-                                                            c[i]['Ссылка на таблицу подрядчика']),
+                                                            c[i]['Ссылка на таблицу подрядчика'],needHeader),
                                             InstaUser(Tools.getAccFromUrl(c[i]['Запаска'])),
                                             c[i]['Список рекламодателей'])
                     if DB.needNewPage(Tools.getAccFromUrl(c[i]['Аккаунт']),

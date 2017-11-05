@@ -5,7 +5,7 @@ from oauth2client.service_account import ServiceAccountCredentials
 
 
 class ContractorTable:
-    def __init__(self, account, adw_account, clasters, link=None):
+    def __init__(self, account, adw_account, clasters, link, needHeader):
         scope = ['https://www.googleapis.com/auth/drive']
         credentials = ServiceAccountCredentials.from_json_keyfile_name('test-92ef740f572c.json', scope)
         self.gc = gspread.authorize(credentials)
@@ -14,15 +14,10 @@ class ContractorTable:
         self.adw_account = adw_account
         self.clasters = clasters
 
-        if link is not None:
-            self.link = link
-            self.sheet = self.gc.open_by_url(link)
-            self.worksheet = self.sheet.worksheets()[-1]
-        else:
-            self.sheet = self.gc.create(account)
-            self.sheet.share(None, perm_type='anyone', role='reader')
-            self.link = "https://docs.google.com/spreadsheets/d/"+self.sheet.id
-            self.worksheet = self.sheet.worksheets()[-1]
+        self.link = link
+        self.sheet = self.gc.open_by_url(link)
+        self.worksheet = self.sheet.worksheets()[-1]
+        if needHeader:
             self.createHeader()
 
     def delete(self):

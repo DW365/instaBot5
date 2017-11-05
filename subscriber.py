@@ -14,7 +14,7 @@ class Subscriber:
             self.subscriptions_count = int(data['follows']['count'])
             self.posts = int(data['media']['count'])
             self.advSubs = self.checkAdvSub(adv_list)
-            time.sleep(0.2)
+            time.sleep(float(SETTINGS.delay))
             DB.addSubscriber(owner, username, self.advSubs, self.posts, self.subscriptions_count)
 
     def emptyInit(self, owner, username, advSubs, posts, subscriptions_count):
@@ -38,7 +38,7 @@ class Subscriber:
             for s in subscriptions:
                 if s in adv_list:
                     counter += 1
-            time.sleep(0.2)
+            time.sleep(float(SETTINGS.delay))
             c+=1
         return counter
 

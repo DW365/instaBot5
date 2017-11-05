@@ -54,7 +54,7 @@ class InstaUser:
 
             new_subs, needMore = parse_raw(subscribers_raw)
             subscribers.extend(new_subs)
-            time.sleep(0.5)
+            time.sleep(float(SETTINGS.delay))
         DB.setLastSubscribers(self.username, subscribers)
         self.new_subscribers = [Subscriber(self.id, s, adv_list) for s in subscribers]
         self.count = len(self.new_subscribers)
