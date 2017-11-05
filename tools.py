@@ -29,8 +29,17 @@ class Tools:
 
     @staticmethod
     def checkBan(username):
-        return True
+        try:
+            Tools.getUser(username)
+            return False
+        except:
+            return True
 
     @staticmethod
     def checkClosed(username):
-        return True
+        data = Tools.getUser(username)
+        return data['is_private'] == True
+
+    @staticmethod
+    def getAccFromUrl(url):
+        return url.split("/")[-1]

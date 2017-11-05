@@ -9,9 +9,10 @@ USERS = {}
 
 def main():
     from mainTable import mainTable
-    a = mainTable("1vP6dHaF1gNUZrOyBUWYrpOhuYMWrg4ttLx_onaLEXxU")
+    a = mainTable("1u2f9pfw-I1Am9NnhiZRu8Ani3aCk2v1ECLOmfCAi46w")
     a.getContractors()
-    #a.doWork()
+    print(a.contractos)
+    a.doWork()
 
 if __name__ == '__main__':
     main()
