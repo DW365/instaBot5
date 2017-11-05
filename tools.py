@@ -26,3 +26,11 @@ class Tools:
     def getId(username):
         data = Tools.getUser(username)
         return data['id']
+
+    @staticmethod
+    def checkBan(username):
+        return True
+
+    @staticmethod
+    def checkClosed(username):
+        return True

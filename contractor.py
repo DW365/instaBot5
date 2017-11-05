@@ -3,7 +3,7 @@ class Contractor:
         self.clasterGroup = clasterGroup
         self.contractorTable = contractorTable
         self.instaUser = instaUser
-        self.adwList = adwList.split(",")
+        self.adwList = adwList.split(",") if adwList != "" else []
 
     def doWork(self):
         self.instaUser.getNewSubscribers(self.adwList)

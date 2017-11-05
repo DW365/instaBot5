@@ -1,11 +1,11 @@
 import gspread
 from oauth2client.service_account import ServiceAccountCredentials
-
 from clasterGroup import ClasterGroup
 from contractorTable import ContractorTable
 from main import DB
 from contractor import Contractor
-
+from instaUser import InstaUser
+from tools import Tools
 
 class mainTable:
     def __init__(self, sid):
@@ -36,12 +36,12 @@ class mainTable:
                 if DB.needNewPage(c[i]['Аккаунт'], c[i]['Запаска'], c[i]['Распределение подписок'], c[i]['Цены по распределению']):
                     contractor.contractorTable.addWorksheet()
                     DB.update(c[i]['Аккаунт'], c[i]['Запаска'], c[i]['Распределение подписок'], c[i]['Цены по распределению']   )
-                accban = self.checkBan(c[i]['Аккаунт'])
-                adwban = self.checkBan(c[i]['Запаска'])
+                accban = Tools.checkBan(c[i]['Аккаунт'])
+                adwban = Tools.checkBan(c[i]['Запаска'])
                 if accban or adwban:
                     closed = True
                 else:
-                    closed = self.checkClosed(c[i]['Аккаунт']) or self.checkClosed(c[i]['Запаска'])
+                    closed = Tools.checkClosed(c[i]['Аккаунт'].split("/")[:-1]) or Tools.checkClosed(c[i]['Запаска'].split("/")[:-1])
 
                 self.worksheet.update_cell(2 + i, 7, "Да" if accban else "Нет")
                 self.worksheet.update_cell(2 + i, 8, "Да" if adwban else "Нет")
