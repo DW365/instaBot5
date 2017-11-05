@@ -151,3 +151,15 @@ class ContractorTable:
         for claster in clasterGroup.clasters:
             values.append(round(claster.average_subs))
         self.worksheet.append_row(values)
+
+    def updateLine(self, clasterGroup):
+        row_count = self.worksheet.row_count
+        self.worksheet.delete_row(row_count)
+        self.addLine(clasterGroup)
+
+    def add(self,clasterGroup):
+        last_date = self.worksheet.cell(self.worksheet.row_count,1).value
+        if last_date != datetime.datetime.now().strftime("%d.%m.%Y"):
+            self.addLine(clasterGroup)
+        else:
+            self.updateLine(clasterGroup)

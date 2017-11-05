@@ -12,4 +12,3 @@ class Settings:
             self.__dict__.update(filedata)
         self.IAPI = Instagram(self.insta_login, self.insta_password)
         self.IAPI.login()
-        self.adv_list = ["lonyowl", "bassin_dd"]

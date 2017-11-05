@@ -23,13 +23,12 @@ class InstaUser:
     def getNewSubscribers(self, adv_list):
         last = DB.getLastSubscribers(self.username)
         first = False
-        # if len(last) == 0:
-        #     first = True
+        if len(last) == 0:
+            first = True
         subscribers = []
 
         resp = SETTINGS.IAPI.getUserFollowers(self.id)
         subscribers_raw = [u.getUsername() for u in resp.getFollowings()]
-
         def parse_raw(subscribers_raw):
             needMore = True
             subscribers = []
@@ -45,7 +44,7 @@ class InstaUser:
         new_subs, needMore = parse_raw(subscribers_raw)
         if first:
             needMore = False
-            DB.setLastSubscribers(self.username, subscribers)
+            DB.setLastSubscribers(self.username, new_subs)
             return []
         subscribers.extend(new_subs)
 
@@ -57,7 +56,7 @@ class InstaUser:
             subscribers.extend(new_subs)
             time.sleep(0.5)
         DB.setLastSubscribers(self.username, subscribers)
-        self.new_subscribers = [Subscriber(s, adv_list) for s in subscribers]
+        self.new_subscribers = [Subscriber(self.id, s, adv_list) for s in subscribers]
         self.count = len(self.new_subscribers)
 
     def __repr__(self):
