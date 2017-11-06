@@ -20,7 +20,7 @@ class Db:
 
     def initSubs(self):
         self.cursor.execute(
-            "CREATE TABLE IF NOT EXISTS 'subscribers' (owner TEXT, username TEXT PRIMARY KEY, advSubs INTEGER, posts INTEGER, subscriptions_count INTEGER, date TEXT)")
+            "CREATE TABLE IF NOT EXISTS 'subscribers' (owner TEXT, username TEXT, advSubs INTEGER, posts INTEGER, subscriptions_count INTEGER, date TEXT, userowner TEXT PRIMARY KEY)")
 
     def initContractors(self):
         self.cursor.execute(
@@ -60,9 +60,9 @@ class Db:
         self.applyChanges()
 
     def addSubscriber(self, owner, username, advSubs, posts, subscriptions_count):
-        self.cursor.execute("INSERT OR IGNORE INTO subscribers VALUES (?,?,?,?,?,?)",
+        self.cursor.execute("INSERT OR IGNORE INTO subscribers VALUES (?,?,?,?,?,?,?)",
                             [owner, username, advSubs, posts, subscriptions_count,
-                             datetime.datetime.now().strftime("%d.%m.%Y")])
+                             datetime.datetime.now().strftime("%d.%m.%Y"), username+owner])
         self.applyChanges()
 
     def getDbSubs(self, owner):

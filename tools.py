@@ -1,9 +1,10 @@
 import requests
-
+from main import SETTINGS
 
 class Tools:
     @staticmethod
     def getUser(user_name, max_id=None, proxystring=None):
+        proxystring = SETTINGS.proxy
         url = "https://www.instagram.com/%s/" % user_name
         proxies = {'http': proxystring,
                    'https': proxystring}
